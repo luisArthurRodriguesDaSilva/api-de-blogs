@@ -2,11 +2,16 @@ const { generateToken } = require('../auth/jwtFuncs');
 const { User } = require('../models');
 
 const login = async (email, password) => {
-  const user = await User.findOne({ where: { password, email } });
-  console.log('user');
-  console.log(user);
-  const token = await generateToken(email);
-  return token;
+  try {
+    const user = await User.findOne({ where: { password, email } });
+  if (user) {
+    const token = await generateToken(email);
+    return { token };
+  }
+  throw new Error('Invalid fields');  
+} catch (err) {
+    return { error: true, message: err.message };
+  }
 };
 
 module.exports = {

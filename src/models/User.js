@@ -12,8 +12,22 @@ const UserModel = (sequelize, DataTypes) => {
     email:DataTypes.STRING,
     password:DataTypes.STRING,
     image:DataTypes.STRING,
-  });
+  },
+  {
+    sequelize,
+    timestamps: false,
+    tableName:'users',
+  }
+  );
 
+  // User.associate = (models) => {
+  //   User.hasMany(models,
+  //     {
+  //       foreingKeys: 'userId',
+  //       as:'blog_posts',
+  //   });
+  // };
+  
   return User;
 };
 
