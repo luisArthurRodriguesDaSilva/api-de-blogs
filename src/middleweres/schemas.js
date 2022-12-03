@@ -2,7 +2,14 @@ const joi = require('joi');
 
 const loginSchema = joi.object({
   email: joi.string().email({ tlds: { allow: false } }).required(),
-  password: joi.string().min(5).required(),
+  password: joi.string().min(6).required(),
 });
 
-module.exports = { loginSchema };
+const newUserSchema = joi.object({
+  email: joi.string().email({ tlds: { allow: false } }).required(),
+  password: joi.string().min(6).required(),
+  displayName: joi.string().min(8).required(),
+  image: joi.string().optional(),
+});
+
+module.exports = { loginSchema, newUserSchema };
