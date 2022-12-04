@@ -13,7 +13,13 @@ const CategoryModel = (sequelize, DataTypes) => {
     underscored:true,
     timestamps: false,
     tableName:'categories',
-  }
+  },
+  // Category.associate = ({PostCategory}) =>{
+  //   Category.hasMany(PostCategory,{
+  //     foreingKeys:'category_id',
+  //     as:'post_category',
+  //   })
+  // }
   );
 
   return Category;

@@ -22,7 +22,9 @@ const BlogPostModel = (sequelize, DataTypes) => {
 
   BlogPost.associate = ({User}) => {
     BlogPost.belongsTo(User,
-     { foreignKey: 'user_id' });
+     { foreignKey: 'user_id',
+      as:'user' // um usuario tem varios posts mas um post só pertence a um usuário
+    });
  };
 
   return BlogPost;
