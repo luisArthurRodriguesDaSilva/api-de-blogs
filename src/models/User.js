@@ -21,13 +21,13 @@ const UserModel = (sequelize, DataTypes) => {
   }
   );
 
-  // User.associate = (models) => {
-  //   User.hasMany(models,
-  //     {
-  //       foreingKeys: 'userId',
-  //       as:'blog_posts',
-  //   });
-  // };
+  User.associate = ({BlogPost}) => {
+    User.hasMany(BlogPost,
+      {
+        foreingKeys: 'user_id',
+        as:'blog_posts',
+    });
+  };
   
   return User;
 };
