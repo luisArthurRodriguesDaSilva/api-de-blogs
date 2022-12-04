@@ -9,17 +9,16 @@ const jwtConfig = {
 const secret = process.env.JWT_SECRET || 'seusecretdetoken';
 
 const generateToken = async (info = { nothing: 0 }) => {
-  const token = jwt.sign({ data: { ...info } }, secret, jwtConfig);
+  const token = jwt.sign({ data: info }, secret, jwtConfig);
   return token;
 };
 
-const verifyToken = async (info = { nothing: 0 }) => {
+const verifyToken = async (token) => {
   try {
-    const decoded = jwt.verify({ data: { ...info } }, secret);
+    const decoded = jwt.verify(token, secret);
     return decoded;
   } catch (e) {
-    return { error: true, message: e.message };
+    throw new Error('Expired or invalid token');
   }
 };
-
 module.exports = { verifyToken, generateToken };
