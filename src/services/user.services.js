@@ -23,7 +23,7 @@ const getUser = async (id = false) => {
     const user = id 
   ? await User.findOne({ attributes, where: { id } })
   : await User.findAll({ attributes });
-  if (!user) throw new Error('user not found');
+  if (!user) throw new Error('User does not exist');
     return { user };
   } catch (err) {
     return { error: true, message: err.message };
