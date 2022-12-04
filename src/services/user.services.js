@@ -11,7 +11,7 @@ const registerUser = async (user) => {
   }
   const newUser = await User.create(user);
   console.log(newUser);
-  const token = await generateToken(user.email);
+  const token = await generateToken({ id: newUser.id });
   return { token };
 } catch (err) {
     return { error: true, message: err.message };

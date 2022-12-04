@@ -7,7 +7,6 @@ const getCategories = async () => {
 
 const addCategory = async (category) => {
   const newCategory = (await Category.create({ name: category.name })).dataValues;
-  console.log('cat', newCategory);
   return newCategory;
 };
 
