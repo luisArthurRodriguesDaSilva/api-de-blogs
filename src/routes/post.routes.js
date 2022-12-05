@@ -7,8 +7,8 @@ const router = express.Router();
 
 router.post('/',
   validateToken, 
-  validateIfCategorieExist, 
   validatePostFormat, 
+  validateIfCategorieExist, 
   postControllers.postApost);
 
 router.get('/:id', validateToken, postControllers.getAPost);
