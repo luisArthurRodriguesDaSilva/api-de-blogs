@@ -10,16 +10,18 @@ const addBlogPost = async (userId, actDate, { title, content }) => {
       content,
     },
   )).dataValues;
+  console.log('newpost');
   return newPost.id;
 };
 
 const addPostCategories = async (postId, post) => {
-  Promise.all(post.categoryIds.map((categoryId) => (
-    PostCategory.create({
+  await Promise.all(post.categoryIds.map((id) => {
+    console.log('id', id);
+    return PostCategory.create({
       postId,
-      categoryId,
-    })
-    )));
+      categoryId: id,
+    });
+    }));
 };
 
 const getApost = async (id) => {
@@ -30,16 +32,24 @@ const getApost = async (id) => {
 };
 
 const postApost = async (post, user) => {
-  const userId = user.data;
+  const userId = user.data.id;
   console.log('userId', userId);
   const actDate = new Date();
   // const t = await sequelize.transaction();
   try {
+    console.log('passei aqui 1');
     const newPostId = await addBlogPost(userId, actDate, post);
+    
+    console.log('passei aqui 2');
     await addPostCategories(newPostId, post);
+
+    console.log('passei aqui 3');
     const newPost = await getApost(newPostId);
-    return newPost;
+
+    console.log('passei aqui 4');
+    return { newPost };
   } catch (err) {
+    console.log(err.message);
     return { error: true, message: err.message };
   }
 };

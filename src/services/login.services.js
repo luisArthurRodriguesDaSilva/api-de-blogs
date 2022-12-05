@@ -5,7 +5,7 @@ const login = async (email, password) => {
   try {
     const user = (await User.findOne({ where: { password, email } }));
   if (user) {
-    const token = await generateToken(user.dataValues.id);
+    const token = await generateToken({ id: user.dataValues.id });
     return { token };
   }
   throw new Error('Invalid fields');  

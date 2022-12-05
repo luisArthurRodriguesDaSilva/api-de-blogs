@@ -1,4 +1,5 @@
 const { loginSchema, newUserSchema, categorieSchema, postSchema } = require('./schemas');
+const { categoriesServices } = require('../services');
 
 const validateloginFormat = async (req, res, next) => { 
   const { error } = await loginSchema.validate(req.body);
@@ -24,9 +25,21 @@ const validatePostFormat = async (req, res, next) => {
   next();
 };
 
+const validateIfCategorieExist = async (req, res, next) => {
+  const { categoryIds } = req.body;
+  const existedCategories = await categoriesServices.getCategories();
+  if (existedCategories.length >= Math.max(categoryIds)) {
+ return res.status(400).json(
+    { message: 'one or more "categoryIds" not found' },
+    ); 
+}
+  return next();
+};
+
 module.exports = { 
   validateloginFormat, 
   validateUserFormat, 
   validateCategorieFormat, 
   validatePostFormat,
+  validateIfCategorieExist,
  };

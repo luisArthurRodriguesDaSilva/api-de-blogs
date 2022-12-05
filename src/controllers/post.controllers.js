@@ -3,8 +3,9 @@ const { postServices } = require('../services');
 const postApost = async (req, res) => {
   const { user } = req;
   const post = req.body;
-  const resp = await postServices.postApost(post, user);
-  res.status(200).json(resp);
+  const { newPost, error, message } = await postServices.postApost(post, user);
+  if (error) return res.status(400).json({ message });
+  return res.status(201).json(newPost);
 };
 
 const getAPost = async (req, res) => {
