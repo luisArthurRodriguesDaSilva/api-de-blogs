@@ -15,13 +15,13 @@ const addBlogPost = async (userId, actDate, { title, content }) => {
 };
 
 const addPostCategories = async (postId, post) => {
-  await Promise.all(post.categoryIds.map((id) => {
-    console.log('id', id);
-    return PostCategory.create({
-      postId,
-      categoryId: id,
-    });
-    }));
+  const ids = await Promise.all(
+    post.categoryIds.map(async (categoryId) => {
+      console.log('categoryId', categoryId);
+      await PostCategory.create({ postId, categoryId });
+    }),
+);
+    return ids;
 };
 
 const getApost = async (id) => {
