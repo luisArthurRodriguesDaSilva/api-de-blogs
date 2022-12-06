@@ -6,16 +6,20 @@ module.exports = {
     
     post_id:{
         type: Sequelize.INTEGER,
+        references:{
+          model:'blog_posts',
+          key: 'id',
+        }
     },
     
     category_id:{
       type: Sequelize.INTEGER,
       //      allowNull: false,
       //      primaryKey: true,
-      // references:{
-      //   model:'categories',
-      //   key: 'id',
-      // }
+      references:{
+        model:'categories',
+        key: 'id',
+      }
     },
     });
   

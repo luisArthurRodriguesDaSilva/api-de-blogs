@@ -14,4 +14,9 @@ const getAPost = async (req, res) => {
   return res.status(200).json(post);
 };
 
-module.exports = { postApost, getAPost };
+const getAllPosts = async (req, res) => {
+  const posts = await postServices.getAllPosts();
+  return res.status(200).json(posts);
+};
+
+module.exports = { postApost, getAPost, getAllPosts };

@@ -1,4 +1,4 @@
-const { BlogPost, PostCategory } = require('../models');
+const { BlogPost, PostCategory, User } = require('../models');
 
 const addBlogPost = async (userId, actDate, { title, content }) => {
   const newPost = (await BlogPost.create(
@@ -31,6 +31,19 @@ const getApost = async (id) => {
   return post;
 };
 
+const getAllPosts = async () => {
+  const posts = await BlogPost.findAll({
+    include: [{
+      model: User, as: 'user', attributes: { exclude: ['password'] },
+    }, 
+    // {
+    //   model: Category, as: 'post_categories', attributes: { exclude: [] },
+    // } //parte do problema
+  ],
+  });
+  return posts;
+};
+
 const postApost = async (post, user) => {
   const userId = user.data.id;
   console.log('userId', userId);
@@ -57,4 +70,5 @@ const postApost = async (post, user) => {
 module.exports = {
   postApost,
   getApost,
+  getAllPosts,
 };
