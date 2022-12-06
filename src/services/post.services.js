@@ -1,4 +1,4 @@
-const { BlogPost, PostCategory, User } = require('../models');
+const { BlogPost, PostCategory, User, Category } = require('../models');
 
 const addBlogPost = async (userId, actDate, { title, content }) => {
   const newPost = (await BlogPost.create(
@@ -37,7 +37,7 @@ const getAllPosts = async () => {
       model: User, as: 'user', attributes: { exclude: ['password'] },
     }, 
     {
-      model: PostCategory, as: 'post_categorie', attributes: { exclude: [] },
+      model: Category, as: 'categories', attributes: { exclude: [] },
     }, // parte do problema
   ],
   });
