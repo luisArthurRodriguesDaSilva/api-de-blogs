@@ -23,6 +23,10 @@ const PostCategoryModel = (sequelize, DataTypes) => {
       as:'posts',
       through:PostCategory,
     })
+    PostCategory.belongsTo(BlogPost,{
+      foreingKey:'post_id',
+      as:'post_categories'
+    });
   };
 
   return PostCategory;

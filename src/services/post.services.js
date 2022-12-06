@@ -36,9 +36,9 @@ const getAllPosts = async () => {
     include: [{
       model: User, as: 'user', attributes: { exclude: ['password'] },
     }, 
-    // {
-    //   model: Category, as: 'post_categories', attributes: { exclude: [] },
-    // } //parte do problema
+    {
+      model: PostCategory, as: 'post_categorie', attributes: { exclude: [] },
+    }, // parte do problema
   ],
   });
   return posts;
