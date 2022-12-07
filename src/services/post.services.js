@@ -25,10 +25,21 @@ const addPostCategories = async (postId, post) => {
 };
 
 const getApost = async (id) => {
-  const post = await BlogPost.findOne({
+  try {
+    const post = (await BlogPost.findAll({
+    include: [{
+      model: User, as: 'user', attributes: { exclude: ['password'] },
+    }, 
+    {
+      model: Category, as: 'categories', attributes: { exclude: [] },
+    }, // parte do problema
+    ],
     where: { id },
-  });
-  return post;
+  }))[0];
+  return { post };
+} catch (err) {
+  return { error: true, message: err.message };
+  }
 };
 
 const getAllPosts = async () => {

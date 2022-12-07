@@ -10,7 +10,9 @@ const postApost = async (req, res) => {
 
 const getAPost = async (req, res) => {
   const { id } = req.params;
-  const post = await postServices.getApost(id);
+  const { post, error, message } = await postServices.getApost(id);
+  if (error) return res.status(404).json({ message });
+  if (!post) return res.status(404).json({ message: 'Post does not exist' });  
   return res.status(200).json(post);
 };
 
