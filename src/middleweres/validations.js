@@ -1,4 +1,6 @@
-const { loginSchema, newUserSchema, categorieSchema, postSchema, editedPostSchema } = require('./schemas');
+const { 
+  loginSchema, 
+  newUserSchema, categorieSchema, postSchema, editedPostSchema } = require('./schemas');
 const { categoriesServices, postServices } = require('../services');
 
 const getBiggest = (arraio) => arraio.sort((a, b) => b - a)[0];
