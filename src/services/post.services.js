@@ -32,16 +32,20 @@ const getApost = async (id) => {
 };
 
 const getAllPosts = async () => {
-  const posts = await BlogPost.findAll({
+  try {
+    const posts = await BlogPost.findAll({
     include: [{
       model: User, as: 'user', attributes: { exclude: ['password'] },
     }, 
     {
-      model: Category, as: 'categories', attributes: { exclude: [] },
+      model: Category, as: 'categories', through: { attributes: [] },
     }, // parte do problema
   ],
   });
-  return posts;
+  return { posts };
+} catch (err) {
+  return { error: true, message: err.message };
+}
 };
 
 const postApost = async (post, user) => {

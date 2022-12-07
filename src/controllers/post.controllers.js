@@ -15,7 +15,8 @@ const getAPost = async (req, res) => {
 };
 
 const getAllPosts = async (req, res) => {
-  const posts = await postServices.getAllPosts();
+  const { posts, error, message } = await postServices.getAllPosts();
+  if (error) return res.status(500).json(message);
   return res.status(200).json(posts);
 };
 
