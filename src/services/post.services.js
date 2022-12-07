@@ -59,6 +59,17 @@ const getAllPosts = async () => {
 }
 };
 
+const editPost = async (edits, id) => {
+  try {
+ await BlogPost.update({
+      ...edits,
+    }, { where: { id } }); 
+    return {};
+  } catch (err) {
+    return { error: true, message: err.message };
+  }
+};
+
 const postApost = async (post, user) => {
   const userId = user.data.id;
   const actDate = new Date();
@@ -77,4 +88,5 @@ module.exports = {
   postApost,
   getApost,
   getAllPosts,
+  editPost,
 };

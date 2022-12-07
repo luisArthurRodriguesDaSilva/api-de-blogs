@@ -22,4 +22,13 @@ const postSchema = joi.object({
   categoryIds: joi.array().min(1).required(),
 });
 
-module.exports = { loginSchema, newUserSchema, categorieSchema, postSchema };
+const editedPostSchema = joi.object({
+  title: joi.string().required(),
+  content: joi.string().required(),
+});
+
+module.exports = { editedPostSchema,
+   loginSchema,
+newUserSchema,
+categorieSchema,
+postSchema };

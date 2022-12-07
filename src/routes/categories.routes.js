@@ -7,5 +7,4 @@ const router = express.Router();
 
 router.post('/', validateToken, validateCategorieFormat, categoriesControllers.addCategory);
 router.get('/', validateToken, categoriesControllers.getAllCategories);
-
 module.exports = router;

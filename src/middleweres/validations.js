@@ -1,5 +1,5 @@
-const { loginSchema, newUserSchema, categorieSchema, postSchema } = require('./schemas');
-const { categoriesServices } = require('../services');
+const { loginSchema, newUserSchema, categorieSchema, postSchema, editedPostSchema } = require('./schemas');
+const { categoriesServices, postServices } = require('../services');
 
 const getBiggest = (arraio) => arraio.sort((a, b) => b - a)[0];
 
@@ -27,6 +27,12 @@ const validatePostFormat = async (req, res, next) => {
   next();
 };
 
+const validateEditedPostFormat = async (req, res, next) => {
+  const { error } = await editedPostSchema.validate(req.body);
+  if (error) return res.status(400).json({ message: 'Some required fields are missing' });
+  next();
+};
+
 const validateIfCategorieExist = async (req, res, next) => {
   const { categoryIds } = req.body;
   const existedCategories = await categoriesServices.getCategories();
@@ -39,10 +45,20 @@ const validateIfCategorieExist = async (req, res, next) => {
   return next();
 };
 
+const validateIfCanEdit = async (req, res, next) => {
+  const { user } = req;
+  const { id } = req.params;
+  const { post } = await postServices.getApost(id);
+  if (post.user.id === user.data.id) return next();
+  return res.status(401).json({ message: 'Unauthorized user' });
+};
+
 module.exports = { 
   validateloginFormat, 
   validateUserFormat, 
   validateCategorieFormat, 
   validatePostFormat,
   validateIfCategorieExist,
+  validateIfCanEdit,
+  validateEditedPostFormat,
  };
