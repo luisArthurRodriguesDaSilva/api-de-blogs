@@ -46,20 +46,11 @@ const getAllPosts = async () => {
 
 const postApost = async (post, user) => {
   const userId = user.data.id;
-  console.log('userId', userId);
   const actDate = new Date();
-  // const t = await sequelize.transaction();
   try {
-    console.log('passei aqui 1');
     const newPostId = await addBlogPost(userId, actDate, post);
-    
-    console.log('passei aqui 2');
     await addPostCategories(newPostId, post);
-
-    console.log('passei aqui 3');
     const newPost = await getApost(newPostId);
-
-    console.log('passei aqui 4');
     return { newPost };
   } catch (err) {
     console.log(err.message);

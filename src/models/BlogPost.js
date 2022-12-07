@@ -25,10 +25,6 @@ const BlogPostModel = (sequelize, DataTypes) => {
      { foreignKey: 'user_id',
       as:'user' // um usuario tem varios posts mas um post só pertence a um usuário
     });
-    // BlogPost.hasMany(postCategory,{
-    //   foreignKey: 'post_id',
-    //   as: 'post_categorie'
-    // });
  };
 
   return BlogPost;
