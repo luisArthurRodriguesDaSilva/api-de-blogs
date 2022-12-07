@@ -24,7 +24,7 @@ const UserModel = (sequelize, DataTypes) => {
   User.associate = ({BlogPost}) => {
     User.hasMany(BlogPost,
       {
-        foreingKeys: 'user_id',
+         foreignKeys: 'user_id',
         as:'blog_posts', // um usuario tem varios posts mas um post só pertence a um usuário
     });
   };
