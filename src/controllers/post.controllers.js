@@ -5,7 +5,7 @@ const postApost = async (req, res) => {
   const post = req.body;
   const { newPost, error, message } = await postServices.postApost(post, user);
   if (error) return res.status(400).json({ message });
-  return res.status(201).json(newPost);
+  return res.status(201).json(newPost.post);
 };
 
 const getAPost = async (req, res) => {
