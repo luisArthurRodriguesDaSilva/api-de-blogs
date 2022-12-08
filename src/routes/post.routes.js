@@ -22,5 +22,7 @@ router.put('/:id',
   validateIfCanEdit,
   validateEditedPostFormat,
   postControllers.updateApost);
+router.delete('/:id', validateToken,
+validateIfCanEdit, postControllers.deleteApost);
 
 module.exports = router;

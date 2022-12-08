@@ -48,11 +48,26 @@ const validateIfCategorieExist = async (req, res, next) => {
 };
 
 const validateIfCanEdit = async (req, res, next) => {
-  const { user } = req;
+  try {
+    const { user } = req;
   const { id } = req.params;
   const { post } = await postServices.getApost(id);
   if (post.user.id === user.data.id) return next();
   return res.status(401).json({ message: 'Unauthorized user' });
+  } catch (err) {
+    return res.status(404).json({
+      message: 'Post does not exist',
+    });
+  }
+};
+
+const validateIfThisPostExist = async (req, res, next) => {
+  const { id } = req.params;
+  const { posts } = await postServices.getAllPosts();
+  console.log('🚀 ~ file: validations.js:62 ~ validateIfThisPostExist ~ Number(id)', Number(id));
+  console.log('🚀 ~ file: validations.js:62 ~ validateIfThisPostExist ~ posts.length', posts.length);
+  if (posts.length < Number(id)) return res.status(404).json({ message: 'Post does not exist' });
+  return next();
 };
 
 module.exports = { 
@@ -63,4 +78,5 @@ module.exports = {
   validateIfCategorieExist,
   validateIfCanEdit,
   validateEditedPostFormat,
+  validateIfThisPostExist,
  };

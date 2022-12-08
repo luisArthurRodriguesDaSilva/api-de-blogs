@@ -84,9 +84,21 @@ const postApost = async (post, user) => {
   }
 };
 
+const deleteApost = async (id) => {
+  try {
+    await BlogPost.destroy({
+    where: { id },
+});
+return {};
+  } catch (err) {
+    return { error: true, message: err.message };
+  }
+};
+
 module.exports = {
   postApost,
   getApost,
   getAllPosts,
   editPost,
+  deleteApost,
 };
