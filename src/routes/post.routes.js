@@ -8,7 +8,7 @@ const {
   validateEditedPostFormat } = require('../middleweres/validations');
 
 const router = express.Router();
-
+router.get('/search', validateToken, postControllers.searchApost);
 router.post('/',
   validateToken, 
   validatePostFormat, 

@@ -41,4 +41,11 @@ const deleteApost = (req, res) => {
   return res.status(204).json();
 };
 
-module.exports = { postApost, getAPost, getAllPosts, updateApost, deleteApost };
+const searchApost = async (req, res) => {
+  const { q } = req.query;
+  const { searchedPosts, error, message } = await postServices.searchPosts(q);
+  if (error) return res.status(400).json({ message });
+  return res.status(200).json(searchedPosts);
+};
+
+module.exports = { postApost, getAPost, getAllPosts, updateApost, deleteApost, searchApost };

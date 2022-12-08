@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, PostCategory, User, Category } = require('../models');
 
 const addBlogPost = async (userId, actDate, { title, content }) => {
@@ -84,6 +85,27 @@ const postApost = async (post, user) => {
   }
 };
 
+const searchPosts = async (searched) => {
+  try {
+    const searchedPosts = await BlogPost.findAll({
+      include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } }, 
+      { model: Category, as: 'categories', attributes: { exclude: [] } }, // parte do problema
+      ],
+      where: {
+        [Op.or]: {
+          title: {
+            [Op.like]: `%${searched}%`,
+          },
+          content: {
+            [Op.like]: `%${searched}%`,
+          },
+        },
+      },
+    });
+    return { searchedPosts };
+  } catch (err) { return { error: true, message: err.message }; }
+};
+
 const deleteApost = async (id) => {
   try {
     await BlogPost.destroy({
@@ -101,4 +123,5 @@ module.exports = {
   getAllPosts,
   editPost,
   deleteApost,
+  searchPosts,
 };
