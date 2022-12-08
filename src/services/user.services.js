@@ -1,5 +1,5 @@
 const { generateToken } = require('../auth/jwtFuncs');
-const { User } = require('../models');
+const { User, BlogPost } = require('../models');
 
 const attributes = ['id', 'displayName', 'email', 'image'];
 
@@ -30,4 +30,14 @@ const getUser = async (id = false) => {
   }
 };
 
-module.exports = { registerUser, getUser };
+const deleteMe = async (id) => {
+  try {
+    await BlogPost.destroy({ where: { userId: id } });
+    await User.destroy({ where: { id } });
+    return {};
+  } catch (err) {
+    return { error: true, message: err.message };
+  }
+};
+
+module.exports = { registerUser, getUser, deleteMe };

@@ -20,4 +20,12 @@ const getUser = async (req, res) => {
   return res.status(200).json(user);
 };
 
-module.exports = { registerUser, getAllUsers, getUser };
+const deleteMe = async (req, res) => {
+  const userId = Number(req.user.data.id); 
+  console.log('🚀 ~ file: user.controllers.js:25 ~ deleteMe ~ userId', userId);
+  const { error, message } = await userServices.deleteMe(userId);
+  if (error) return res.status(500).json({ message });
+  return res.status(204).json();
+};
+
+module.exports = { registerUser, getAllUsers, getUser, deleteMe };
