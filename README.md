@@ -124,7 +124,7 @@ corpo da resposta esperado
 }
 ```
 
-### outras (gets)
+### outras (gets, delete e put)
 
 As outras rotas tem o foco muito maior na obtenção de informações, como os gets, que pegam os usuários em '/user', os posts em '/post' e categorias em '/category', sendo respectivamente delimitadas através do parâmentro id,quando especificado.
 
@@ -137,3 +137,5 @@ get('/user/1') retorna apenas o user de id 1
 get('/post') retorna todos os posts
 
 get('/post/1') retorna apenas o post de id 1
+
+a api ainda conta com as opções de delete e put para respectivamente deletar e editar usuários e posts
